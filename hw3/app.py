@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, abort, render_template, session, url_for, redirect,request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -90,9 +90,13 @@ def reset_db():
 
 @app.route('/')
 def show_all_reviews():
-    return 'Welcome to Movie Theater reviews!'
+    reviews = db_manager.get()
+    return render_template("base.html", reviews=reviews)
 
-
+@app.route('/review/<int:review_id>')
+def show_one_review(review_id):
+    review = db_manager.get(review_id)
+    return render_template("review.html", review=review)
   
 # RUN THE FLASK APP
 if __name__ == "__main__":

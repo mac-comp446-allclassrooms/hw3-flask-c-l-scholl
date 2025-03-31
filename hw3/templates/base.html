@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static', filename='styles.css') }}"
+		/>
+		<title>Movie Reviews</title>
+	</head>
+	<body>
+		<h1>Welcome to Movie Reviews!</h1>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Movie</th>
+					<th>Rating</th>
+					<th>Review</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for review in reviews %}
+				<tr>
+					<td>
+						<a href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }}</a>
+						
+					</td>
+					<td>
+						{% for _ in range(review.rating) %}
+							<span>*</span>
+						{% endfor %}
+					</td>
+					<td>{{ review.text }}</td>
+					<td>
+						<a href="/edit" target="_self">Edit</a>
+					</td>
+					<td>
+						<a href="/delete" target="_self">Delete</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% block content %}
+
+
+		{% endblock %}	
+		
+	</body>
 </html>

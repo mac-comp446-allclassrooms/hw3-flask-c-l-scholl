@@ -1,0 +1,15 @@
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+body {
+	box-sizing: inherit;
+}
+
+th {
+	padding: 1rem;
+}
+
+td {
+	padding: 1rem;
+}
