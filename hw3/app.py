@@ -92,6 +92,7 @@ def reset_db():
 def show_all_reviews():
     return 'Welcome to Movie Theater reviews!'
 
+
   
 # RUN THE FLASK APP
 if __name__ == "__main__":
