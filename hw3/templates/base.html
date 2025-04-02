@@ -12,39 +12,55 @@
 	</head>
 	<body>
 		<h1>Welcome to Movie Reviews!</h1>
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Movie</th>
-					<th>Rating</th>
-					<th>Review</th>
-					<th>Edit</th>
-					<th>Delete</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for review in reviews %}
-				<tr>
-					<td>
-						<a href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }}</a>
-						
-					</td>
-					<td>
-						{% for _ in range(review.rating) %}
-							<span>*</span>
-						{% endfor %}
-					</td>
-					<td>{{ review.text }}</td>
-					<td>
-						<a href="/edit" target="_self">Edit</a>
-					</td>
-					<td>
-						<a href="/delete" target="_self">Delete</a>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<div class="main-container {% if not reviews %}hidden{% endif %}">
+
+			<table border="1" class="review-table">
+				<thead>
+					<tr>
+						<th>Movie</th>
+						<th>Rating</th>
+						<th>Review</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for review in reviews %}
+					<tr>
+						<td>
+							<a href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }}</a>
+							
+						</td>
+						<td>
+							{% for _ in range(review.rating) %}
+								<span>*</span>
+							{% endfor %}
+						</td>
+						<td>{{ review.text }}</td>
+						<td>
+							<a href="/edit" target="_self">Edit</a>
+						</td>
+						<td>
+							<a href="/delete" target="_self">Delete</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<form class="review-form">
+				<label>Movie Name</label>
+				<input id="movie-name" name="movieName" placeholder="Movie Name" type="text">
+
+				<label>Movie Rating</label>
+				<input id="movie-rating" name="movieRating" placeholder="Movie Rating" type="number" min="1" max="5">
+
+				<label>Movie Review</label>
+				<textarea id="movie-review" name="movieReview" placeholder="Write your review here"></textarea>
+				<div class="review-form-button-container">
+					<button type="submit">Submit Review</button>
+				</div>
+			</form>
+		</div>
 		{% block content %}
 
 

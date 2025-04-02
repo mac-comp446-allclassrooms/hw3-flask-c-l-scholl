@@ -13,3 +13,69 @@ th {
 td {
 	padding: 1rem;
 }
+
+.review-table {
+	display: table;
+	margin-bottom: 2rem;
+}
+
+.main-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.main-container.hidden {
+	display: none;
+}
+
+.review-form {
+	display: flex;
+	flex-direction: column;
+	max-width: 500px;
+}
+
+.review-form label {
+	margin-bottom: 0.5rem;
+}
+
+.review-form input {
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.review-form textarea {
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.review-form .review-form-button-container {
+
+	display: flex;
+	justify-content: end;
+	align-items: center;
+}
+
+.review-form button {
+	padding: 0.5rem;
+
+}
+
+/* single review */
+
+.single-review-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.review-container {
+	margin-bottom: 1rem;
+}
+
+.back-link {
+	padding: 0.5rem;
+	text-decoration: none;
+	color: black;
+	border: 1px solid black;
+	border-radius: 0.5rem;
+}
