@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+<form class="review-form" method="post" action="{{ url_for('edit_review', review_id=current_review.id) }}">
+	<label>Movie Name</label>
+	<input
+		id="movie-name"
+		name="movieName"
+		placeholder="Movie Name"
+		type="text"
+		value="{{ current_review.title }}"
+	/>
+
+	<label>Movie Rating</label>
+	<input
+		id="movie-rating"
+		name="movieRating"
+		placeholder="Movie Rating"
+		type="number"
+		min="1"
+		max="5"
+		value="{{ current_review.rating }}"
+	/>
+
+	<label>Movie Review</label>
+	<textarea
+		id="movie-review"
+		name="movieReview"
+		placeholder="Write your review here"
+		maxlength="100"
+	>{{ current_review.text }}
+	</textarea>
+	<div class="review-form-button-container">
+		<button type="submit">Submit Review</button>
+	</div>
+</form>
+
+{% endblock %}

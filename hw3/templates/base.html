@@ -12,6 +12,16 @@
 	</head>
 	<body>
 		<h1>Welcome to Movie Reviews!</h1>
+		<nav>
+			<ul class="nav-list">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li>
+					<a href="/new-review">Write a Review</a>
+				</li>
+			</ul>
+		</nav>
 		<div class="main-container {% if not reviews %}hidden{% endif %}">
 
 			<table border="1" class="review-table">
@@ -38,28 +48,16 @@
 						</td>
 						<td>{{ review.text }}</td>
 						<td>
-							<a href="/edit" target="_self">Edit</a>
+							<a href="{{ url_for('modify_review',  review_id=review.id) }}" target="_self">Edit</a>
 						</td>
 						<td>
-							<a href="/delete" target="_self">Delete</a>
+							<a href="{{ url_for('delete_review',  review_id=review.id) }}" target="_self">Delete</a>
 						</td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<form class="review-form">
-				<label>Movie Name</label>
-				<input id="movie-name" name="movieName" placeholder="Movie Name" type="text">
-
-				<label>Movie Rating</label>
-				<input id="movie-rating" name="movieRating" placeholder="Movie Rating" type="number" min="1" max="5">
-
-				<label>Movie Review</label>
-				<textarea id="movie-review" name="movieReview" placeholder="Write your review here"></textarea>
-				<div class="review-form-button-container">
-					<button type="submit">Submit Review</button>
-				</div>
-			</form>
+			
 		</div>
 		{% block content %}
 

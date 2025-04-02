@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, session, url_for, redirect,request
+from flask import Flask, abort, render_template, session, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -10,12 +10,15 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///thereviews.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+
 # Initialize SQLAlchemy with Declarative Base
 class Base(DeclarativeBase):
     pass
 
+
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
+
 
 # Define the Review model using `Mapped` and `mapped_column`
 class Review(db.Model):
@@ -30,6 +33,7 @@ class Review(db.Model):
         self.title = title
         self.text = text
         self.rating = rating
+
 
 # DATABASE UTILITY CLASS
 class Database:
@@ -64,7 +68,9 @@ class Database:
             db.session.delete(review)
             db.session.commit()
 
+
 db_manager = Database()  # Create a database manager instance
+
 
 # Initialize database with sample data
 @app.before_request
@@ -75,8 +81,9 @@ def setup():
             db_manager.create("Mr. Pumpkin Man", "This is a pretty bad movie", 4)
             print("Database initialized with sample data!")
 
+
 # Reset the database
-@app.route('/reset-db', methods=['GET', 'POST'])
+@app.route("/reset-db", methods=["GET", "POST"])
 def reset_db():
     with app.app_context():
         db.drop_all()
@@ -88,16 +95,75 @@ def reset_db():
 # ROUTES
 """You will add all of your routes below, there is a sample one which you can use for testing"""
 
-@app.route('/')
+
+@app.route("/")
 def show_all_reviews():
     reviews = db_manager.get()
     return render_template("base.html", reviews=reviews)
 
-@app.route('/review/<int:review_id>')
+
+@app.route("/review/<int:review_id>")
 def show_one_review(review_id):
     review = db_manager.get(review_id)
     return render_template("review.html", review=review)
-  
+
+
+@app.route("/new-review", methods=["GET", "POST"])
+def new_review():
+    return render_template("new-review.html")
+
+
+@app.route("/create-review", methods=["POST"])
+def create_review():
+    title = request.form.get("movieName")
+    rating = request.form.get("movieRating")
+    text = request.form.get("movieReview")
+
+    if not title or not rating or not text:
+        return "All fields are required!", 400
+    try:
+        rating = int(rating)
+        if rating < 1 or rating > 5:
+            return "Rating must be between 1 and 5!", 400
+    except ValueError:
+        return "Invalid rating value!", 400
+
+    db_manager.create(title=title, text=text, rating=rating)
+    return redirect(url_for("show_all_reviews"))
+
+
+
+@app.route("/edit_review/<int:review_id>", methods=['GET', 'POST'])
+def edit_review(review_id):
+    title = request.form.get("movieName")
+    rating = request.form.get("movieRating")
+    text = request.form.get("movieReview")
+
+    if not title or not rating or not text:
+        return "All fields are required!", 400
+    try:
+        rating = int(rating)
+        if rating < 1 or rating > 5:
+            return "Rating must be between 1 and 5!", 400
+    except ValueError:
+        return "Invalid rating value!", 400
+    db_manager.update(review_id=review_id, title=title, text=text, rating=rating)
+    return redirect(url_for('show_all_reviews'))
+    
+
+@app.route("/modify-review/<int:review_id>", methods=["GET", "POST"])
+def modify_review(review_id):
+    current_review = db_manager.get(review_id)
+
+    return render_template('modify-review.html', current_review=current_review)
+
+
+@app.route("/delete-review/<int:review_id>", methods=["GET", "POST"])
+def delete_review(review_id):
+    db_manager.delete(review_id)
+    return redirect(url_for("show_all_reviews"))
+
+
 # RUN THE FLASK APP
 if __name__ == "__main__":
     with app.app_context():
