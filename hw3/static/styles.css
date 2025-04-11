@@ -1,3 +1,5 @@
+/* design influenced by template website: https://webflow.com/templates/html/known-help-center-website-template */
+
 *, *::before, *::after {
 	box-sizing: border-box;
 }
