@@ -11,53 +11,60 @@
 		<title>Movie Reviews</title>
 	</head>
 	<body>
-		<h1>Welcome to Movie Reviews!</h1>
-		<nav>
-			<ul class="nav-list">
-				<li>
-					<a href="/">Home</a>
-				</li>
-				<li>
-					<a href="/new-review">Write a Review</a>
-				</li>
-			</ul>
-		</nav>
+		<header>
+			<div class="header-top">
+				<a id="title-link" href="/">
+					<div id="title">Movie Reviews</div>
+				</a>
+				<nav>
+					<ul class="nav-list">
+						<li>
+							<a class="list-link nav-link" href="/">Home</a>
+						</li>
+						<li>
+							<a class="list-link nav-link" href="/new-review">Write a Review</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="big-titles">
+				<div class="big-title {% if not reviews %}big-title-1 {% else %}big-title-2{% endif %}">Find Your Movie</div>
+				<div class="big-title {% if not reviews %}big-title-2 {% else %}big-title-1{% endif %}">Spread the Word</div>
+			</div>
+		</header>
 		<div class="main-container {% if not reviews %}hidden{% endif %}">
-
-			<table border="1" class="review-table">
-				<thead>
-					<tr>
-						<th>Movie</th>
-						<th>Rating</th>
-						<th>Review</th>
-						<th>Edit</th>
-						<th>Delete</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for review in reviews %}
-					<tr>
-						<td>
-							<a href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }}</a>
-							
-						</td>
-						<td>
-							{% for _ in range(review.rating) %}
-								<span>*</span>
-							{% endfor %}
-						</td>
-						<td>{{ review.text }}</td>
-						<td>
-							<a href="{{ url_for('modify_review',  review_id=review.id) }}" target="_self">Edit</a>
-						</td>
-						<td>
-							<a href="{{ url_for('delete_review',  review_id=review.id) }}" target="_self">Delete</a>
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
 			
+			<div class="cards-container">
+
+				{% for review in reviews %}
+					<div class="card">
+						<div class="card-header">
+							<a class="list-link" href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }} &#8594;</a>
+							<div class="card-rating">
+								{% for _ in range(review.rating) %}
+									<span>*</span>
+							{% endfor %}
+							</div>
+						</div>
+						<div class="card-content">
+							<div class="card-review-text">
+								<p>{{ review.text }}</p>
+							</div>
+							<div class="card-button-container">
+								<div>
+									<a class="list-link" href="{{ url_for('modify_review',  review_id=review.id) }}" target="_self">Edit this review &#8594;</a>
+								</div>
+								<div>								
+									<a class="list-link" href="{{ url_for('delete_review',  review_id=review.id) }}" target="_self">Delete this review &#10005;</a>
+								</div>
+							</div>
+					</div>
+							
+				</div>
+				{% endfor %}
+			</div>
+			
+		
 		</div>
 		{% block content %}
 
