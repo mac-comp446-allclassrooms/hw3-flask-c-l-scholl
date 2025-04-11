@@ -33,17 +33,15 @@
 			</div>
 		</header>
 		<div class="main-container {% if not reviews %}hidden{% endif %}">
-			
 			<div class="cards-container">
-
 				{% for review in reviews %}
 					<div class="card">
 						<div class="card-header">
 							<a class="list-link" href={{ url_for('show_one_review', review_id=review.id) }}>{{ review.title }} &#8594;</a>
 							<div class="card-rating">
 								{% for _ in range(review.rating) %}
-									<span>*</span>
-							{% endfor %}
+								<span>*</span>
+								{% endfor %}
 							</div>
 						</div>
 						<div class="card-content">
@@ -52,19 +50,16 @@
 							</div>
 							<div class="card-button-container">
 								<div>
-									<a class="list-link" href="{{ url_for('modify_review',  review_id=review.id) }}" target="_self">Edit this review &#8594;</a>
+									<a class="list-link edit-button" href="{{ url_for('modify_review',  review_id=review.id) }}" target="_self">Edit &#8594;</a>
 								</div>
 								<div>								
-									<a class="list-link" href="{{ url_for('delete_review',  review_id=review.id) }}" target="_self">Delete this review &#10005;</a>
+									<a class="list-link delete-button" href="{{ url_for('delete_review',  review_id=review.id) }}" target="_self">Delete &#10005;</a>
 								</div>
 							</div>
+						</div>
 					</div>
-							
-				</div>
 				{% endfor %}
 			</div>
-			
-		
 		</div>
 		{% block content %}
 

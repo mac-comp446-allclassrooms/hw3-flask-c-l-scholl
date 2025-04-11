@@ -130,8 +130,24 @@ td {
 }
 
 .card-rating {
-	font-size: x-large;
+	font-size: xx-large;
 }
+
+.card-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: start;
+}
+
+.card-button-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	text-align: end;
+	gap: 1rem;
+}
+
 
 .main-container {
 	display: flex;
@@ -164,7 +180,8 @@ td {
 .review-form input {
 	font-size: small;
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-	border-radius: 0.5rem;
+	border-radius: 0.25rem;
+	border: 1px solid black;
 	padding: 0.5rem;
 	margin-bottom: 1rem;
 }
@@ -173,8 +190,10 @@ td {
 	font-size: small;
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 	padding: 0.5rem;
-	border-radius: 0.5rem;
+	border: 1px solid black;
+	border-radius: 0.25rem;
 	margin-bottom: 1rem;
+	min-width: 500px;
 }
 
 .review-form .review-form-button-container {
@@ -185,8 +204,17 @@ td {
 }
 
 .review-form button {
-	padding: 0.5rem;
+	padding: 1rem;
+	background-color: #005ff9;
+	color: white;
+	border: none;
+	border-radius: 0.25rem;
+	transition: all 300ms ease;
+}
 
+.review-form button:hover {
+
+	background-color: #0053d7;
 }
 
 /* single review */
